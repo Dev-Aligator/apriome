@@ -7,6 +7,7 @@ import 'swiper/css/navigation';
 import '../styles/Carousel.sass';
 import { weathering_with_you, overlord, slime, mirai } from '../assets/anime-posters';
 import { EffectCoverflow, Pagination, Navigation } from 'swiper/modules';
+import { HiArrowLeft, HiArrowRight } from 'react-icons/hi';
 
 const Carousel = () => {
   const hotAnimeList = [
@@ -50,7 +51,7 @@ const Carousel = () => {
         navigation={{
           nextEl: '.swiper-button-next',
           prevEl: '.swiper-button-prev',
-          clickable: true,
+          // clickable: true,
         }}
         modules={[EffectCoverflow, Pagination, Navigation]}
         className="swiper_container"
@@ -63,10 +64,10 @@ const Carousel = () => {
         
         <div className="slider-controler">
           <div className="swiper-button-prev slider-arrow">
-            <ion-icon name="arrow-back-outline"></ion-icon>
+            <HiArrowLeft color="#222222" size={25}/>
           </div>
           <div className="swiper-button-next slider-arrow">
-            <ion-icon name="arrow-forward-outline"></ion-icon>
+            <HiArrowRight color="#222222" size={25}/>
           </div>
           <div className="swiper-pagination"></div>
         </div>
