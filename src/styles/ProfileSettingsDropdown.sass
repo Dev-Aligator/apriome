@@ -1,0 +1,71 @@
+.profile
+  right: 30px
+  width: 60px
+  height: 60px
+  border-radius: 50%
+  overflow: hidden
+  cursor: pointer
+
+  img
+    height: 100%
+    width: 100%
+    object-fit: cover
+
+.menu
+  position: absolute
+  width: 260px
+  background-color: white
+  top: 100px
+  right: 15px
+  border-radius: 20px
+  visibility: hidden
+  opacity: 0
+  transition: 0.5s
+  z-index: 9999
+
+  &.activate-dropdown
+    visibility: visible
+    opacity: 1
+    top: 75px
+
+  &::before
+    content: ""
+    background-color: white
+    width: 15px
+    height: 15px
+    position: absolute
+    top: -8px
+    right: 35px
+    rotate: 45deg
+
+  p
+    font-size: 1rem
+    text-align: center
+    color: #b9b9b9
+    margin: 20px
+
+  ul
+    margin-bottom: 20px
+
+    li
+      padding: 15px 20px
+      border-top: 1px solid #33333310
+      background: #ffffff
+      transition: 0.5s
+
+      &:hover
+        background: #e7e7e7
+
+      i
+        font-size: 1.3rem
+        color: #b4b4b4
+        transition: 0.5s
+
+        &:hover
+          color: #111
+
+      a
+        font-size: 1.3rem
+        color: #292929
+        margin-left: 20px
+
