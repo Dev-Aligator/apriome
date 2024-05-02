@@ -15,7 +15,7 @@ import {
 } from "./components/Interface/InterfaceCollection";
 import Aleart from "./components/Aleart";
 import { environmentVariable } from "./constants/environment";
-import MoviePage from "./components/MoviePage";
+import AnimePage from "./components/AnimePage";
 
 axios.defaults.xsrfCookieName = "csrftoken";
 axios.defaults.xsrfHeaderName = "X-CSRFToken";
@@ -112,7 +112,7 @@ const App = () => {
               className={`bg-primary-custom ${styles.paddingX} ${styles.flexStart}`}
             >
               <div className={`movie-page-container ${styles.moviePageWidth} `}>
-                <MoviePage></MoviePage>
+                <AnimePage client={client}></AnimePage>
                 <Footer />
               </div>
             </div>

@@ -4,13 +4,17 @@ import {
   AlertPropsColorOverrides,
 } from "@mui/material/Alert";
 
-export interface Movie {
+export interface Anime {
   id: string;
   title: string;
-  director: string;
-  genre: String[];
-  description: string;
-  poster: string;
+  synopsis: string | null;
+  genre: string | null;
+  aired: String | null;
+  episodes: number | null;
+  popularity: number | null;
+  ranked: number | null;
+  score: number | null;
+  img_url: string | null;
 }
 
 export interface UserFeature {
