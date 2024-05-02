@@ -35,7 +35,7 @@ const Hero = ({ setOpenModal }: HeroProps) => {
         className={`flex-1 ${styles.flexStart} flex-col xl:px-0 sm:px-16 px-6`}
       >
         <div className="flex flex-row items-center py-[6px] px-4 bg-discount-gradient rounded-[10px] mb-2">
-          <img src={discount} alt="discount" className="w-[32px] h-[32px]" />
+          <img src={discount} alt="discount" className="w-[32px] h-[32px] mr-2" />
           <p className={`${styles.paragraph} ml-2`}>
             <span className="text-white">AI</span>-Powered{" "}
             <span className="text-white">Anime</span> Recommendation System
@@ -83,7 +83,7 @@ const Hero = ({ setOpenModal }: HeroProps) => {
           animate="visible"
           variants={animationVariants}
         >
-          <HiDatabase color="#4066ff" size={25} />
+          <HiDatabase color="#b0122d" size={25} />
           <input type="text" />
           <button className="searchButton">Search</button>
         </motion.div>
@@ -98,9 +98,9 @@ const Hero = ({ setOpenModal }: HeroProps) => {
         }}
       >
         <Carousel></Carousel>
-        <div className="absolute z-[0] w-[40%] h-[35%] top-0 pink__gradient" />
+        <div className="absolute z-[0] w-[40%] h-[35%] top-0 scarlet__gradient" />
         <div className="absolute z-[1] w-[80%] h-[80%] rounded-full white__gradient bottom-40" />
-        <div className="absolute z-[0] w-[50%] h-[50%] right-20 bottom-20 blue__gradient" />
+        <div className="absolute z-[0] w-[50%] h-[50%] right-20 bottom-20 scarlet__gradient" />
       </motion.div>
       <div className={`ss:hidden ${styles.flexCenter}`}>
         <GetStarted setOpenModal={setOpenModal} />
