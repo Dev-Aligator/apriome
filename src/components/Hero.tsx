@@ -1,7 +1,7 @@
 import styles from "../style";
 import { discount } from "../assets";
 import GetStarted from "./GetStarted";
-import { HiDatabase } from "react-icons/hi";
+import { HiOutlineSearch } from "react-icons/hi";
 import { motion, AnimatePresence } from "framer-motion";
 import Carousel from "./Carousel";
 
@@ -83,7 +83,7 @@ const Hero = ({ setOpenModal }: HeroProps) => {
           animate="visible"
           variants={animationVariants}
         >
-          <HiDatabase color="#b0122d" size={25} />
+          <HiOutlineSearch color="#b0122d" size={25} />
           <input type="text" />
           <button className="searchButton">Search</button>
         </motion.div>

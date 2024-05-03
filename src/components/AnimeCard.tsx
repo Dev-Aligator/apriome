@@ -6,9 +6,14 @@ interface AnimeCardProps {
 }
 const AnimeCard = ({anime}:AnimeCardProps) => {
   const maxSynopsisLength = 200;
-  if (anime.synopsis && anime.synopsis.length > maxSynopsisLength) {
-    anime.synopsis = anime.synopsis.substring(0, maxSynopsisLength - 3) + "...";
+  const minSynopsisLength = 50;
+  if (anime.synopsis) {
+    if (anime.synopsis.length > maxSynopsisLength)
+      anime.synopsis = anime.synopsis.substring(0, maxSynopsisLength - 3) + "...";
+    else if (anime.synopsis.length < minSynopsisLength)
+      anime.synopsis.padEnd(50, " ");
   }
+  
   if( !anime.genre ){
     anime.genre = "['Unknown']";
   }
@@ -21,7 +26,7 @@ const AnimeCard = ({anime}:AnimeCardProps) => {
 
         <div className="tags">
           {genres.map((tag, index) => (
-            <span key={index}>{tag}</span>
+            <span key={index} className={`genre ${String(tag)}`}>{tag}</span>
           ))}
         </div>
 
