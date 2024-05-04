@@ -1,10 +1,11 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect} from "react";
 import "../styles/AnimeDetails.sass";
-import { Anime } from "./Interface/InterfaceCollection";
+import { AleartProps, Anime } from "./Interface/InterfaceCollection";
 import { AxiosInstance } from "axios";
 
 interface AnimeDetailsProps {
-    client: AxiosInstance,
+    client: AxiosInstance;
+    setAleartInfo: React.Dispatch<React.SetStateAction<AleartProps>>;
 }
 
 var defaultAnime:Anime = {
@@ -20,7 +21,7 @@ var defaultAnime:Anime = {
     img_url: "",
 }
 
-const AnimeDetails = ({ client }: AnimeDetailsProps) => {
+const AnimeDetails = ({ client, setAleartInfo }: AnimeDetailsProps) => {
 
 
     const animeId = window.location.href.split("/")[6];
@@ -36,6 +37,22 @@ const AnimeDetails = ({ client }: AnimeDetailsProps) => {
         } finally {
         }
     };
+
+    const handleSubmit = async (collectionType: String) => {
+    const formData = {
+      "animeId": animeId,
+      "typeOfCollection": collectionType,
+    }
+    client.post("/api/anime/add-collection/", formData, {withCredentials: true}).then(function () {
+      setAleartInfo({
+         isAleart: 1,
+          title: "Success",
+          normalText: `Adding ${anime.title} to ${collectionType} !`,
+
+      })
+    });
+
+  }
 
     useEffect(() => {
         fetchAnimeData();
@@ -75,9 +92,9 @@ const AnimeDetails = ({ client }: AnimeDetailsProps) => {
                                         <a href={anime.img_url ? anime.img_url : ""}>
                                             <img data-src={anime.img_url ? anime.img_url : ""} alt={anime.title} itemProp="image" src={anime.img_url ? anime.img_url : ""} /> </a>
                                     </div>
-                                    <div className="action-link"> <a href="https://myanimelist.net/ownlist/anime/add?selected_series_id=9253&amp;hideLayout=1&amp;click_type=list-add-anime-title-btn&amp;more_type=1" data-ga-click-type="list-add-anime-title-btn" data-ga-impression-type="list-add-anime-title-btn" >Add to My List</a></div>
+                                    <div className="action-link"> <a onClick={()=>{handleSubmit("watchlist")}}>Add to My List</a></div>
 
-                                    <div className="action-link"><a href="https://myanimelist.net/login.php?from=%2Fanime%2F9253%2FSteins_Gate&amp;error=login_required&amp;">Add to Favorites</a></div>
+                                    <div className="action-link"><a onClick={()=>{handleSubmit("favorite")}}>Add to Favorites</a></div>
 
 
                                     <h2 className="section-header">Information</h2>

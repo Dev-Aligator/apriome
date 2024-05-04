@@ -28,7 +28,7 @@ const Aleart = ({
   if (isAleart == 1) {
     setTimeout(() => {
       setAleartInfo({
-        isAleart: 2,
+        isAleart: 0,
       });
     }, timeOut);
   }
@@ -43,7 +43,7 @@ const Aleart = ({
           <Alert
             onClose={() => {
               setAleartInfo({
-                isAleart: 2,
+                isAleart: 0,
               });
             }}
             severity={severity}

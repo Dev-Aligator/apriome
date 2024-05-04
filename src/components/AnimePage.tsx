@@ -25,7 +25,6 @@ const AnimePage = ({ client }: AnimePageProps) => {
       console.error("Error fetching data:", error);
     } finally {
       setIsLoading(false);
-      console.log(localStorage.topper);
     }
   };
   

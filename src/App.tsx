@@ -139,35 +139,44 @@ const App = () => {
       <Route
         path="/anime/:id"
         element={<div className="bg-primary-custom w-full overflow-hidden main-modal h-full">
-        {modalOpen && !authenticated && (
-          <Modal
-            setOpenModal={setModalOpen}
-            setAuthenticated={setAuthenticated}
-            authenticated={authenticated}
-            client={client}
-            getUserFunction={getUser}
-          />
-        )}
-        <div className={`${styles.paddingX} ${styles.flexCenter}`}>
-          <div className={`${styles.boxWidth}`}>
-            <Navbar
-              setAuthenticated={setAuthenticated}
+          <Aleart
+            isAleart={aleartInfo.isAleart}
+            title={aleartInfo.title}
+            normalText={aleartInfo.normalText}
+            strongText={aleartInfo.strongText}
+            setAleartInfo={setAleartInfo}
+            severity={aleartInfo.severity}
+            color={aleartInfo.color}
+          ></Aleart>
+          {modalOpen && !authenticated && (
+            <Modal
               setOpenModal={setModalOpen}
+              setAuthenticated={setAuthenticated}
               authenticated={authenticated}
               client={client}
-              userInfo={userInfo}
+              getUserFunction={getUser}
             />
+          )}
+          <div className={`${styles.paddingX} ${styles.flexCenter}`}>
+            <div className={`${styles.boxWidth}`}>
+              <Navbar
+                setAuthenticated={setAuthenticated}
+                setOpenModal={setModalOpen}
+                authenticated={authenticated}
+                client={client}
+                userInfo={userInfo}
+              />
+            </div>
           </div>
-        </div>
-        <div className={`bg-primary-custom ${styles.flexStart}`}>
-          <div className={`${styles.moviePageWidth}`}>
-            <AnimeDetails client={client}></AnimeDetails>
-            <Footer />
+          <div className={`bg-primary-custom ${styles.flexStart}`}>
+            <div className={`${styles.moviePageWidth}`}>
+              <AnimeDetails client={client} setAleartInfo={setAleartInfo}></AnimeDetails>
+              <Footer />
 
+            </div>
           </div>
-        </div>
-        
-      </div>}
+
+        </div>}
       />
     </Routes>
   );
