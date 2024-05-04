@@ -1,7 +1,6 @@
 import styles from "../style";
 import { discount } from "../assets";
 import GetStarted from "./GetStarted";
-import { HiOutlineSearch } from "react-icons/hi";
 import { motion, AnimatePresence } from "framer-motion";
 import Carousel from "./Carousel";
 import SearchBar from "./SearchBar";
