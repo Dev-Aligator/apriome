@@ -16,6 +16,7 @@ import {
 import Aleart from "./components/Aleart";
 import { environmentVariable } from "./constants/environment";
 import AnimePage from "./components/AnimePage";
+import AnimeDetails from "./components/AnimeDetails";
 
 axios.defaults.xsrfCookieName = "csrftoken";
 axios.defaults.xsrfHeaderName = "X-CSRFToken";
@@ -67,6 +68,7 @@ const App = () => {
         console.log(error);
       });
   };
+
 
   return (
     <Routes>
@@ -133,7 +135,40 @@ const App = () => {
             <UserProfile userInfo={userInfo} client={client}></UserProfile>
           </div>
         }
-      ></Route>
+      />
+      <Route
+        path="/anime/:id"
+        element={<div className="bg-primary-custom w-full overflow-hidden main-modal h-full">
+        {modalOpen && !authenticated && (
+          <Modal
+            setOpenModal={setModalOpen}
+            setAuthenticated={setAuthenticated}
+            authenticated={authenticated}
+            client={client}
+            getUserFunction={getUser}
+          />
+        )}
+        <div className={`${styles.paddingX} ${styles.flexCenter}`}>
+          <div className={`${styles.boxWidth}`}>
+            <Navbar
+              setAuthenticated={setAuthenticated}
+              setOpenModal={setModalOpen}
+              authenticated={authenticated}
+              client={client}
+              userInfo={userInfo}
+            />
+          </div>
+        </div>
+        <div className={`bg-primary-custom ${styles.flexStart}`}>
+          <div className={`${styles.moviePageWidth}`}>
+            <AnimeDetails client={client}></AnimeDetails>
+            <Footer />
+
+          </div>
+        </div>
+        
+      </div>}
+      />
     </Routes>
   );
 };

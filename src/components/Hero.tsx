@@ -4,6 +4,7 @@ import GetStarted from "./GetStarted";
 import { HiOutlineSearch } from "react-icons/hi";
 import { motion, AnimatePresence } from "framer-motion";
 import Carousel from "./Carousel";
+import SearchBar from "./SearchBar";
 
 interface HeroProps {
   setOpenModal: React.Dispatch<React.SetStateAction<boolean>>;
@@ -77,17 +78,8 @@ const Hero = ({ setOpenModal }: HeroProps) => {
         <p className={`${styles.paragraph} max-w-[470px] mt-5`}>
           Tell us what kind of anime gets you excited! Share your favorites and we'll create a personalized list just for you!
         </p>
-        <motion.div
-          className="flexCenterSearch search-bar animate__animated animate__wobble"
-          initial="hidden"
-          animate="visible"
-          variants={animationVariants}
-        >
-          <HiOutlineSearch color="#b0122d" size={25} />
-          <input type="text" />
-          <button className="searchButton">Search</button>
-        </motion.div>
-      </div>
+        <SearchBar animationVariants={animationVariants}></SearchBar>
+             </div>
       <motion.div
         className={`flex-1 flex ${styles.flexCenter} md:my-0 my-10 relative`}
         initial={{ x: "7rem", opacity: 0 }}

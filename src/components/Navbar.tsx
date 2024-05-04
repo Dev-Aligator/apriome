@@ -72,7 +72,7 @@ const Navbar = ({
                 </a>
               )
             ) : (
-              <a href={`/Apriome/${nav.path}`}>{nav.title}</a>
+              <a href={`/apriome/${nav.path}`}>{nav.title}</a>
             )}
           </li>
         ))}

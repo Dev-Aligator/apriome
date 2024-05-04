@@ -6,9 +6,13 @@
 
 @tailwind utilities
 
+html 
+  background: #000
+
 \:root
   --black-gradient:linear-gradient(144.39deg, #ffffff -278.56%, #6d6d6d -78.47%, #11101d 91.61%)
   --card-shadow:0px 20px 100px -10px rgba(66, 71, 91, 0.1)
+  height: 100%
 
 *
   scroll-behavior: smooth
@@ -117,6 +121,9 @@
     border: none
     outline: none
 
+    &::placeholder 
+      border-right: 0.08rem solid #666
+
 .flexCenterSearch
   display: flex
   row-gap: 2rem
@@ -194,4 +201,5 @@ li.mr-0
 
   /* Adjust the z-index to control stacking order
   /* Add any other styles you want for the alert box
+
 

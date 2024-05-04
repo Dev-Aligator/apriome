@@ -1,0 +1,411 @@
+$header-background-color: #222
+$header-border-color: #222 #272727 #585858 #272727
+$header-font-color: #e0e0e0
+
+$anime-details-background-color: rgb(0, 0 , 0)
+$anime-details-border-color: rgb(229, 229, 229)
+$anime-details-font-size: 14px
+$anime-details-line-height: 16.5px
+$anime-details-font-color: #e0e0e0
+
+$anime-details-category-color: rgb(50, 50, 50)
+$anime-details-anchor-color: rgb(237, 45, 77)
+$anime-details-score-font-size: 24px
+$anime-details-rank-font-size: 16px
+$header-font-family: Verdana, Arial
+$anime-details-font-family: Avenir, 'lucida grande', tahoma, verdana, arial, sans-serif
+
+$header-padding: 5px 7px 5px 9px
+$header-margin: 0px
+
+$anime-details-padding: 5px 10px 10px
+$anime-details-left-column-padding: 3px
+$anime-details-right-column-padding: 5px
+
+.header-container 
+    padding-right: 7px
+    background-color: $header-background-color
+    border-color: $header-border-color
+    border-style: solid
+    border-width: 1px
+    color: $header-font-color
+    font-family: Verdana, Arial
+    font-size: 16px
+    font-weight: 700
+    margin: 0px
+    padding: 5px 7px 5px 9px
+    text-align: left
+    
+
+    .header 
+        display: table-cell
+        width: 855px
+
+        header-title
+            font-weight: 400
+            display: inline
+            margin: 0px
+
+
+.anime-details-body-container
+    background-color: $anime-details-background-color
+    border: 1px solid $anime-details-border-color
+    padding: $anime-details-padding
+    position: relative
+
+    td
+        font-size: $anime-details-font-size
+        line-height: $anime-details-line-height
+
+    .left-column
+        border-right: 1px solid $anime-details-border-color
+        padding: $anime-details-left-column-padding
+
+        img
+            border: 0
+            opacity: 1
+            transition: opacity 0.3s ease-in-out
+
+        .action-link
+            display: (block !important)
+            a
+                width: 100%
+
+
+           
+
+        .section-header
+            border-bottom: 1px solid rgb(190, 190, 190)
+            color: rgb(237, 45, 77)
+            font-size: 14px
+            font-weight: 700
+            margin: 4px 0 5px
+            padding: 3px 0
+
+    .right-column
+        padding-left: $anime-details-right-column-padding
+
+        .anime-details-navigation
+            font-family: $anime-details-font-family
+            font-size: 12px
+            list-style: none
+            margin: 0
+            padding: 0 0 2px
+            color: $anime-details-font-color
+
+            > div
+                display: inline-block
+
+                span
+                    line-height: 18px
+                    margin: 0
+                    padding: 0
+
+        table td
+            font-size: $anime-details-font-size
+            line-height: $anime-details-line-height
+
+            .table-display
+                margin-top: 12px
+                display: table
+                width: 100%
+
+                .anime-details-statistics-container
+                    display: table-cell
+                    vertical-align: top
+
+                    & > div
+                        position: relative
+
+                    &:first-child
+                        border-radius: 1px
+                        height: 68px
+                        padding: 8px 10px
+
+                        .anime-details-cell-score
+                            color: #fff
+                            display: block
+                            font-size: $anime-details-score-font-size
+                            font-weight: 700
+                            padding: 30px 0 22px
+                            position: relative
+                            text-align: center
+                            width: 60px
+                            top: -5px
+
+                            &::before
+                                background-color: $anime-details-anchor-color
+                                border-radius: 2px
+                                color: #e0e0e0
+                                content: attr(data-title)
+                                display: block
+                                font-size: 10px
+                                font-weight: 400
+                                left: 50%
+                                line-height: 1.0em
+                                margin-left: -30px
+                                padding: 2px 0
+                                position: absolute
+                                text-align: center
+                                text-transform: uppercase
+                                top: 6px
+                                width: 60px
+
+                        .anime-details-cell-rank
+                            padding-top: 8px
+                            padding-left: 20px
+                            margin-left: 12px
+                            left: 80px
+                            position: absolute
+                            top: 15px
+                            display: block
+
+
+                            span
+                                color: $anime-details-category-color
+                                font-size: 22px
+                                color: #fff
+                                margin-right: 24px
+                                white-space: nowrap
+                                line-height: 24px
+                                margin: 0 24px 0 0
+                                padding: 0
+
+                       
+
+                    
+                    .stats-block-po-r-clearfix
+                        background-color: #181818
+                        border: #272727 1px solid
+                        border-radius: 1px
+                        height: 68px
+                        padding: 8px 10px
+                        color: $anime-details-font-color
+
+                        &::before
+                            background-color: rgb(237, 45, 77)
+                            -webkit-box-shadow: #121212 1px 0 1px 0
+                            box-shadow: #121212 1px 0 1px 0
+                            content: ''
+                            display: block
+                            height: 60px
+                            left: 88px
+                            position: absolute
+                            top: 4px
+                            width: 1px
+
+
+
+                    &:nth-child(2)
+                        padding: 6px 0 6px 10px
+                        white-space: nowrap
+                        color: $anime-details-category-color
+                        margin-top: 8px
+                        text-align: left
+
+                .anime-details-right-poster-container
+                    width: 200px
+                    padding-left: 16px
+                    display: table-cell
+                    vertical-align: top
+
+                    img
+                        max-height: 150px
+                        opacity: 1
+                        transition: opacity 0.3s ease-in-out
+                        width: 200px
+
+.section-header
+    border-bottom: 1px solid rgb(190, 190, 190)
+    color: rgb(237, 45, 77)
+    font-size: 14px
+    font-weight: 700
+    margin: 4px 0 5px
+    padding: 3px 0
+
+.anime-details-synopsis
+    line-height: $anime-details-line-height
+    margin: 0
+    padding: 0
+
+.anime-details-bottom-container
+    font-size: $anime-details-font-size
+    line-height: $anime-details-line-height
+    padding-bottom: 24px
+    
+    .more-recommendations-div
+        float: right
+        font-size: 11px
+        font-weight: 400
+        padding-right: 2px
+
+    .anime-details-recommendation-container
+        background-color: #272727
+        display: block
+        height: 140px
+        opacity: 1
+        position: relative
+        transition: all 0.3s ease-in-out
+        width: 90px
+        text-decoration: none
+        float: right
+
+        > span:first-child
+            color: #abc4ed
+            display: block
+            font-family: $anime-details-font-family
+            font-size: 12px
+            font-weight: 700
+            line-height: 16.8px
+            padding-top: 40px
+            text-align: center
+            width: 100%
+            padding: 40px 0 0
+
+        > span:nth-child(2)
+            background-color: rgba(0, 0, 0, 0.7)
+            border-radius: 50%
+            color: #abc4ed
+            display: block
+            height: 20px
+            left: 45px
+            margin-left: -10px
+            position: absolute
+            top: 65px
+            width: 20px
+            line-height: 16.5px
+            padding: 0
+            margin: 0
+
+            > *
+                font-weight: 900
+                font-family: 'Font Awesome 6 Pro'
+                display: block
+                -webkit-font-smoothing: antialiased
+                font-style: normal
+                font-variant: normal
+                line-height: 11px
+                text-rendering: auto
+                left: 7px
+                position: absolute
+                top: 5px
+
+        .recommendation-div
+            width: 702px
+            overflow: hidden
+            position: relative
+
+            .recommendations
+                height: 140px
+                display: block
+                overflow: hidden
+                position: relative
+
+                ul
+                    width: 2744px
+                    display: block
+                    margin: 0
+                    overflow: hidden
+                    padding: 0
+
+                    li
+                        width: 90px
+                        box-sizing: border-box
+                        cursor: pointer
+                        display: block
+                        float: left
+                        margin-right: 8px
+                        overflow: hidden
+                        position: relative
+
+.anime-recommended
+    width: 90px
+    height: 140px
+    background-position: 50% 50%
+    background-repeat: no-repeat
+    background-size: cover
+    display: block
+    opacity: 1
+    position: relative
+    transition: opacity 0.3s ease-in-out
+    color: rgb(28, 67, 155)
+    text-decoration: none
+
+    > span:first-child
+        background-image: url('https://myanimelist.net/images/image_box_shadow_bottom.png?v=1634263200')
+        background-position: 0% 100%
+        background-repeat: no-repeat
+        background-size: 100% 100%
+        bottom: 0
+        color: #fff
+        display: block
+        font-family: $anime-details-font-family
+        font-size: 10px
+        line-height: 12px
+        padding: 15px 4px 2px
+        position: absolute
+        text-shadow: rgba(0, 0, 0, 0.8) 1px 1px 0px
+        width: calc(100% - 8px)
+        word-break: break-word
+        overflow-wrap: break-word
+        margin: 0
+
+    > span:nth-child(2)
+        background-color: rgba(0, 0, 0, 0.7)
+        color: #fff
+        display: block
+        font-family: $anime-details-font-family
+        font-size: 10px
+        line-height: 10px
+        padding: 2px 5px
+        position: absolute
+        right: 0
+        text-decoration: none
+        text-shadow: rgba(0, 0, 0, 0.8) 1px 1px 0px
+        top: 0
+        word-break: break-word
+        overflow-wrap: break-word
+        margin: 0
+
+    img
+        border: 0
+        opacity: 1
+        image-rendering: optimizeQuality
+
+.anchor-text
+    color: rgb(237, 45, 77)
+    text-decoration: none
+
+.text-box-container, .statistics-header, .popularity-header, .anime-details-synopsis
+    color: rgb(255, 255, 255)
+
+.user-status-block, .action-link
+    background-color: #181818
+    border: #272727 1px solid
+    padding: 6px 0
+    padding-left: 10px
+    padding-right: 10px
+    white-space: nowrap
+    color: #fff
+    display: inline-block
+
+    a
+        background-color: $anime-details-anchor-color
+        border: 1px solid $anime-details-anchor-color
+        border-radius: 4px
+        cursor: pointer
+        display: inline-block
+        font-family: $anime-details-font-family
+        font-size: 20px
+        line-height: 11px
+        margin: 0 auto
+        opacity: 1
+        
+        padding: 6px 24px 6px 24px
+        position: relative
+        text-align: center
+        transition: all 0.3s ease-in-out
+        vertical-align: middle
+        color: #fff
+        text-decoration: none
+        animation: kf-btn-add-list-anim-ripple 1.5s ease 2s 6 normal none running
