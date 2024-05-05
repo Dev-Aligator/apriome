@@ -12,12 +12,12 @@ import axios from "axios";
 import {
   AleartProps,
   UserFeature,
+  Anime,
 } from "./components/Interface/InterfaceCollection";
 import Aleart from "./components/Aleart";
 import { environmentVariable } from "./constants/environment";
 import AnimePage from "./components/AnimePage";
 import AnimeDetails from "./components/AnimeDetails";
-
 axios.defaults.xsrfCookieName = "csrftoken";
 axios.defaults.xsrfHeaderName = "X-CSRFToken";
 axios.defaults.withCredentials = true;
@@ -30,6 +30,9 @@ const App = () => {
   const [modalOpen, setModalOpen] = useState(false);
 
   const [authenticated, setAuthenticated] = useState(false);
+
+  const [animes, setAnimes] = useState<Anime[]>([]);
+
 
 
   const [userInfo, setUserInfo] = useState<[String, UserFeature | null]>([
@@ -107,14 +110,14 @@ const App = () => {
             </div>
             <div className={`bg-primary-custom ${styles.flexStart}`}>
               <div className={`${styles.boxWidth}`}>
-                <Hero setOpenModal={setModalOpen} />
+                <Hero setOpenModal={setModalOpen} animes={animes} setAnimes={setAnimes} client={client} />
               </div>
             </div>
             <div
               className={`bg-primary-custom ${styles.paddingX} ${styles.flexStart}`}
             >
               <div className={`movie-page-container ${styles.moviePageWidth} `}>
-                <AnimePage client={client}></AnimePage>
+                <AnimePage client={client} animes={animes} setAnimes={setAnimes}></AnimePage>
                 <Footer />
               </div>
             </div>

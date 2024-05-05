@@ -4,12 +4,16 @@ import GetStarted from "./GetStarted";
 import { motion, AnimatePresence } from "framer-motion";
 import Carousel from "./Carousel";
 import SearchBar from "./SearchBar";
-
+import { AxiosInstance } from "axios";
+import React from "react";
+import { Anime } from "./Interface/InterfaceCollection";
 interface HeroProps {
   setOpenModal: React.Dispatch<React.SetStateAction<boolean>>;
+  client: AxiosInstance;
+  setAnimes: React.Dispatch<React.SetStateAction<Anime[]>>;
 }
 
-const Hero = ({ setOpenModal }: HeroProps) => {
+const Hero = ({ setOpenModal, client, setAnimes }: HeroProps) => {
   const animationVariants = {
     hidden: {
       opacity: 0,
@@ -77,7 +81,7 @@ const Hero = ({ setOpenModal }: HeroProps) => {
         <p className={`${styles.paragraph} max-w-[470px] mt-5`}>
           Tell us what kind of anime gets you excited! Share your favorites and we'll create a personalized list just for you!
         </p>
-        <SearchBar animationVariants={animationVariants}></SearchBar>
+        <SearchBar animationVariants={animationVariants} client={client} setAnimes={setAnimes}></SearchBar>
              </div>
       <motion.div
         className={`flex-1 flex ${styles.flexCenter} md:my-0 my-10 relative`}

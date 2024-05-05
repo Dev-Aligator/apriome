@@ -6,10 +6,11 @@ import { Anime } from "./Interface/InterfaceCollection";
 
 interface AnimePageProps {
   client: AxiosInstance;
+  animes: Anime[];
+  setAnimes: React.Dispatch<React.SetStateAction<Anime[]>>;
 }
 
-const AnimePage = ({ client }: AnimePageProps) => {
-  const [animes, setAnimes] = useState<Anime[]>([]);
+const AnimePage = ({ client, animes, setAnimes }: AnimePageProps) => {
   const [isLoading, setIsLoading] = useState(false); 
 
   const fetchAnimeData = async () => {
@@ -48,7 +49,7 @@ const AnimePage = ({ client }: AnimePageProps) => {
         {isLoading ? (
           <p>Loading animes...</p> // Display loading message while fetching
         ) : (
-            animes.map((anime, index) => (
+            animes?.map((anime, index) => (
               <MovieCard key={index} anime={anime} />
             ))
           )}
