@@ -2,24 +2,12 @@ import { useState, useEffect} from "react";
 import "../styles/AnimeDetails.sass";
 import { AleartProps, Anime } from "./Interface/InterfaceCollection";
 import { AxiosInstance } from "axios";
-
+import { defaultAnime } from "../constants";
 interface AnimeDetailsProps {
     client: AxiosInstance;
     setAleartInfo: React.Dispatch<React.SetStateAction<AleartProps>>;
 }
 
-var defaultAnime:Anime = {
-    id: "0",
-    title: "",
-    synopsis: "",
-    genre: "",
-    aired: "",
-    episodes: 0,
-    popularity: 0,
-    ranked: 0,
-    score: 0,
-    img_url: "",
-}
 
 const AnimeDetails = ({ client, setAleartInfo }: AnimeDetailsProps) => {
 

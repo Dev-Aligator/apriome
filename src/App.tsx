@@ -110,7 +110,7 @@ const App = () => {
             </div>
             <div className={`bg-primary-custom ${styles.flexStart}`}>
               <div className={`${styles.boxWidth}`}>
-                <Hero setOpenModal={setModalOpen} animes={animes} setAnimes={setAnimes} client={client} />
+                <Hero setOpenModal={setModalOpen} setAnimes={setAnimes} client={client} />
               </div>
             </div>
             <div
