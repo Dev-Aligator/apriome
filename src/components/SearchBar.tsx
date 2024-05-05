@@ -58,10 +58,10 @@ const SearchBar = ({animationVariants, client, setAnimes}:SearchBarProps) => {
 
   };
   
-  const inputChangeHandler = (event:any) => {
-    setSearchText(event.target.value);
-    fetchAnimeData();
-  }
+  // const inputChangeHandler = (event:any) => {
+  //   setSearchText(event.target.value);
+  //   fetchAnimeData();
+  // }
   const fetchAnimeData = async () => {
     try {
       const apiUrl = `/api/anime-search/`;
@@ -81,7 +81,7 @@ const SearchBar = ({animationVariants, client, setAnimes}:SearchBarProps) => {
       variants={animationVariants}
     >
       <HiOutlineSearch color="#b0122d" size={25} />
-      <input type="text" placeholder={text} onChange={event => inputChangeHandler(event)} onBlur={()=>{setIsDisable(false)}} onFocus={()=>{setIsDisable(true)}} />
+      <input type="text" placeholder={text} onChange={event => setSearchText(event.target.value)} onBlur={()=>{setIsDisable(false)}} onFocus={()=>{setIsDisable(true)}} />
       <button className="searchButton" onClick={fetchAnimeData}>Search</button>
     </motion.div>
 
