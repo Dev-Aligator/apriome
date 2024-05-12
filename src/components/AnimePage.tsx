@@ -3,7 +3,8 @@ import "../styles/AnimePage.sass";
 import { AxiosInstance } from "axios";
 import { useEffect, useState } from "react";
 import { Anime } from "./Interface/InterfaceCollection";
-
+import { Pagination } from "@mui/material";
+import PuffLoader from "react-spinners/PuffLoader";
 interface AnimePageProps {
   client: AxiosInstance;
   animes: Anime[];
@@ -11,55 +12,65 @@ interface AnimePageProps {
 }
 
 const AnimePage = ({ client, animes, setAnimes }: AnimePageProps) => {
-  const [isLoading, setIsLoading] = useState(false); 
+  const [isLoading, setIsLoading] = useState(false);
+  const [pageNumber, setPageNumber] = useState(1);
 
-  const fetchAnimeData = async () => {
+  const handlePaginationChange = (event: any, value: number) => {
+    event.preventDefault();
+    setPageNumber(value);
+    fetchAnimeData(value);
+  };
+
+  const fetchAnimeData = async (pageNumber: number = 1) => {
     setIsLoading(true);
-    localStorage.topper = window.scrollY;
+    // localStorage.topper = window.scrollY;
 
     try {
-      const apiUrl = "/api/anime/";
+      const apiUrl = `/api/anime?page=${pageNumber}`;
       const response = await client.get(apiUrl);
       const fetchedAnimes = response.data["animes"];
-      setAnimes(prevAnimes => [...prevAnimes, ...fetchedAnimes]); // Update animes state using functional update to avoid dependency on previous state
+      setAnimes(fetchedAnimes); // Update animes state using functional update to avoid dependency on previous state
     } catch (error) {
       console.error("Error fetching data:", error);
     } finally {
       setIsLoading(false);
     }
   };
-  
-  useEffect(() => {
-    window.scrollTo({
-      top: localStorage.topper,
-      behavior: "instant",
-    });   
-  },[isLoading])
+
+  // useEffect(() => {
+  //   window.scrollTo({
+  //     top: localStorage.topper,
+  //     behavior: "instant",
+  //   });
+  // }, [isLoading]);
   useEffect(() => {
     fetchAnimeData();
   }, []);
 
-
-
-
-
   return (
     <>
-      <div className="movie-page">
-        {isLoading ? (
-          <p>Loading animes...</p> // Display loading message while fetching
-        ) : (
-            animes?.map((anime, index) => (
-              <MovieCard key={index} anime={anime} />
-            ))
-          )}
+      {isLoading ? (
+        <div className="centered-div" style={{ width: "100%" }}>
+          <PuffLoader color={"#F07489"} loading={isLoading} size={150} />
+        </div>
+      ) : (
+        <div className="movie-page">
+          {animes?.map((anime, index) => (
+            <MovieCard key={index} anime={anime} />
+          ))}
+        </div>
+      )}
+      <div className="centered-div pagination">
+        <Pagination
+          count={676}
+          page={pageNumber}
+          onChange={handlePaginationChange}
+          size="large"
+          style={{ color: "#F07489" }}
+        ></Pagination>
       </div>
-      <button className="load-more-btn" onClick={fetchAnimeData} disabled={isLoading}>
-        {isLoading ? 'Loading...' : <span>Show more <i className="fa-solid fa-caret-down"></i></span>}
-      </button>
     </>
   );
 };
 
 export default AnimePage;
-
