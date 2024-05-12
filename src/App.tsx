@@ -18,6 +18,8 @@ import Aleart from "./components/Aleart";
 import { environmentVariable } from "./constants/environment";
 import AnimePage from "./components/AnimePage";
 import AnimeDetails from "./components/AnimeDetails";
+
+import UserProfile from './components/UserProfile';
 axios.defaults.xsrfCookieName = "csrftoken";
 axios.defaults.xsrfHeaderName = "X-CSRFToken";
 axios.defaults.withCredentials = true;
@@ -169,6 +171,7 @@ const App = () => {
                 client={client}
                 userInfo={userInfo}
               />
+              <UserProfile userInfo={userInfo} client={client} />
             </div>
           </div>
           <div className={`bg-primary-custom ${styles.flexStart}`}>
