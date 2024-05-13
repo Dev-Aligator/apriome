@@ -3,6 +3,7 @@ import "../styles/AnimeDetails.sass";
 import { AleartProps, Anime } from "./Interface/InterfaceCollection";
 import { AxiosInstance } from "axios";
 import { defaultAnime } from "../constants";
+import PuffLoader from "react-spinners/PuffLoader";
 interface AnimeDetailsProps {
     client: AxiosInstance;
     setAleartInfo: React.Dispatch<React.SetStateAction<AleartProps>>;
@@ -12,21 +13,33 @@ interface AnimeDetailsProps {
 const AnimeDetails = ({ client, setAleartInfo }: AnimeDetailsProps) => {
 
 
-    const animeId = window.location.href.split("/")[6];
+    const [animeId, setAnimeId] = useState(window.location.href.split("/")[6]);
     const [anime, setAnime] = useState<Anime>(defaultAnime);
     const [genres, setGenres] = useState<String[]>();
     const [similarAnimes, setSimilarAnimes] = useState<Anime[]>([]);
+    const [isLoadingSimilarAnimes, setIsLoadingSimilarAnimes] = useState(true);
     const fetchAnimeData = async () => {
         try {
             const apiUrl = `/api/anime/${animeId}`;
             const response = await client.get(apiUrl);
             setAnime(response.data["anime"]); // Update animes state using functional update to avoid dependency on previous state
-            setSimilarAnimes(response.data["similar_animes"]);
         } catch (error) {
             console.error("Error fetching data:", error);
         } finally {
         }
     };
+
+    const fetchSimilarAnimes = async () => {
+        try {
+            const apiUrl = `/api/anime/similar?id=${animeId}`;
+            const response = await client.get(apiUrl);
+            setSimilarAnimes(response.data["similar_animes"]);
+            setIsLoadingSimilarAnimes(false);
+        } catch (error) {
+            console.error("Error fetching data:", error);
+        } finally {
+        }
+    }
 
     const handleSubmit = async (collectionType: String) => {
     const formData = {
@@ -45,14 +58,15 @@ const AnimeDetails = ({ client, setAleartInfo }: AnimeDetailsProps) => {
   }
 
     useEffect(() => {
+        setIsLoadingSimilarAnimes(true);
         fetchAnimeData();
-    }, []);
+        fetchSimilarAnimes();
+    }, [animeId]);
 
     useEffect(() => {
         if (anime) {
             anime.img_url = anime.img_url ? anime.img_url : "";
             anime.episodes = anime.episodes ? anime.episodes : 0;
-
             if (!anime.genre) {
                 anime.genre = "['Unknown']";
             }
@@ -115,7 +129,7 @@ const AnimeDetails = ({ client, setAleartInfo }: AnimeDetailsProps) => {
 
                                     <h2 className="section-header">Statistics</h2>
                                     <div itemProp="aggregateRating" itemType="http://schema.org/AggregateRating" className="statistics-header" data-id="info1">
-                                        <span className="anime-details-score">Score:</span> <span itemProp="ratingValue" className="rating-value">{anime.score}</span><sup className="sup-text">1</sup>
+                                        <span className="anime-details-score">Score:</span> <span itemProp="ratingValue" className="rating-value">{anime.score?.toFixed(2)}</span><sup className="sup-text">1</sup>
                                         <meta itemProp="bestRating" content="10" />
                                         <meta itemProp="worstRating" content="1" />
 
@@ -155,7 +169,7 @@ const AnimeDetails = ({ client, setAleartInfo }: AnimeDetailsProps) => {
                                                             <div className="anime-details-statistics-container">
                                                                 <div className="stats-block-po-r-clearfix">
                                                                     <div className="anime-details-cell-score" data-title="score" data-user="1,399,252 users" title="indicates a weighted score. Please note that 'Not yet aired' titles are excluded.">
-                                                                        <div>{anime.score}</div>
+                                                                        <div>{anime.score?.toFixed(2)}</div>
                                                                     </div>
 
                                                                     <div className="anime-details-cell-rank"><span title="based on the top anime page. Please note that 'Not yet aired' and 'R18+' titles are excluded.">Ranked <strong>#{anime.ranked}</strong></span><span>Popularity <strong>#{anime.popularity}</strong></span></div>
@@ -191,11 +205,12 @@ const AnimeDetails = ({ client, setAleartInfo }: AnimeDetailsProps) => {
                                                      </a>
                                                         <div className="recommendation-div" data-json="{&quot;width&quot;:702,&quot;btnWidth&quot;:40,&quot;margin&quot;:8}">
                                                             <div className="recommendations">
+                                                                {isLoadingSimilarAnimes ? <div className="centered-div"><PuffLoader color={"#F07489"} loading={isLoadingSimilarAnimes} size={150} /></div> : (
                                                                 <ul>
                                                                     {similarAnimes.map((anime, index) => (
-                                                                        <li key={String(index)} className="anime-recommended" title={anime.title}><a href="https://myanimelist.net/recommendations/anime/9253-31043" className="anime-recommended" data-ga-click-type="anime-user-recommend" ><span>{anime.title}</span><span className="style-895">{anime.score}</span><img src={anime.img_url? anime.img_url: ""} width="90" height="140" alt={anime.title} /></a></li>
+                                                                        <li key={String(index)} className="anime-recommended" title={anime.title}><a href={`#/anime/${anime.id}`} onClick={()=>{setAnimeId(anime.id)}} className="anime-recommended" data-ga-click-type="anime-user-recommend" ><span>{anime.title}</span><span className="style-895">{anime.score?.toFixed(2)}</span><img src={anime.img_url? anime.img_url: ""} width="90" height="140" alt={anime.title}/></a></li>
                                                                     ))}
-                                                                </ul>
+                                                                </ul> )}
                                                             </div>
                                                         </div>
                                                     </div>
