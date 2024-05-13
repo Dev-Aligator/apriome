@@ -15,11 +15,13 @@ const AnimeDetails = ({ client, setAleartInfo }: AnimeDetailsProps) => {
     const animeId = window.location.href.split("/")[6];
     const [anime, setAnime] = useState<Anime>(defaultAnime);
     const [genres, setGenres] = useState<String[]>();
+    const [similarAnimes, setSimilarAnimes] = useState<Anime[]>([]);
     const fetchAnimeData = async () => {
         try {
             const apiUrl = `/api/anime/${animeId}`;
             const response = await client.get(apiUrl);
             setAnime(response.data["anime"]); // Update animes state using functional update to avoid dependency on previous state
+            setSimilarAnimes(response.data["similar_animes"]);
         } catch (error) {
             console.error("Error fetching data:", error);
         } finally {
@@ -185,13 +187,14 @@ const AnimeDetails = ({ client, setAleartInfo }: AnimeDetailsProps) => {
                                                         <h2 className="section-header">Recommendations
                                                         </h2>
                                                     </div>
-                                                    <div><a href="https://myanimelist.net/anime/9253/Steins_Gate/userrecs" className="anime-details-recommendation-container" >
-                                                        <span>View All</span> <span><i className="style-884" aria-hidden="true"></i></span> </a>
+                                                    <div><a href="https://myanimelist.net/anime/9253/Steins_Gate/userrecs" className="anime-details-recommendation-container"  style={{backgroundImage: `url(${anime.img_url})`}}>
+                                                     </a>
                                                         <div className="recommendation-div" data-json="{&quot;width&quot;:702,&quot;btnWidth&quot;:40,&quot;margin&quot;:8}">
                                                             <div className="recommendations">
-                                                                <ul data-slide="7">
-                                                                    <li className="anime-recommended" title="Boku dake ga Inai Machi"><a href="https://myanimelist.net/recommendations/anime/9253-31043" className="anime-recommended" data-ga-click-type="anime-user-recommend" ><span>Boku dake ga Inai Machi</span><span className="style-895">133 Users</span><img src="https://cdn.myanimelist.net/images/anime/1935/127974.jpg" width="90" height="140" alt="Boku dake ga Inai Machi" /></a></li>
-
+                                                                <ul>
+                                                                    {similarAnimes.map((anime, index) => (
+                                                                        <li key={String(index)} className="anime-recommended" title={anime.title}><a href="https://myanimelist.net/recommendations/anime/9253-31043" className="anime-recommended" data-ga-click-type="anime-user-recommend" ><span>{anime.title}</span><span className="style-895">{anime.score}</span><img src={anime.img_url? anime.img_url: ""} width="90" height="140" alt={anime.title} /></a></li>
+                                                                    ))}
                                                                 </ul>
                                                             </div>
                                                         </div>
