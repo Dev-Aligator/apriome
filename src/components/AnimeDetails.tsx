@@ -18,10 +18,12 @@ const AnimeDetails = ({ client, setAleartInfo }: AnimeDetailsProps) => {
     const [genres, setGenres] = useState<String[]>();
     const [similarAnimes, setSimilarAnimes] = useState<Anime[]>([]);
     const [isLoadingSimilarAnimes, setIsLoadingSimilarAnimes] = useState(true);
+    const [isLoadingAnimeDetails, setIsLoadingAnimeDetails] = useState(true);
     const fetchAnimeData = async () => {
         try {
             const apiUrl = `/api/anime/${animeId}`;
             const response = await client.get(apiUrl);
+            setIsLoadingAnimeDetails(false);
             setAnime(response.data["anime"]); // Update animes state using functional update to avoid dependency on previous state
         } catch (error) {
             console.error("Error fetching data:", error);
@@ -59,6 +61,7 @@ const AnimeDetails = ({ client, setAleartInfo }: AnimeDetailsProps) => {
 
     useEffect(() => {
         setIsLoadingSimilarAnimes(true);
+        setIsLoadingAnimeDetails(true);
         fetchAnimeData();
         fetchSimilarAnimes();
     }, [animeId]);
@@ -77,6 +80,7 @@ const AnimeDetails = ({ client, setAleartInfo }: AnimeDetailsProps) => {
 
     return (
         <>
+        { isLoadingAnimeDetails ? <div className="centered-div" style={{height: "40vh"}}><PuffLoader color={"#F07489"} loading={isLoadingAnimeDetails} size={200} /></div> : (<> 
             <div className="header-container">
                 <div className="header">
                     <div itemProp="name">
@@ -225,6 +229,7 @@ const AnimeDetails = ({ client, setAleartInfo }: AnimeDetailsProps) => {
                     </tbody>
                 </table>
             </div>
+        </>)}
         </>
     )
 };
