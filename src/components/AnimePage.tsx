@@ -21,12 +21,12 @@ const AnimePage = ({ client, animes, setAnimes }: AnimePageProps) => {
     fetchAnimeData(value);
   };
 
-  const fetchAnimeData = async (pageNumber: number = 1) => {
+  const fetchAnimeData = async (page: number = 1, shuffle: number =0) => {
     setIsLoading(true);
     // localStorage.topper = window.scrollY;
 
     try {
-      const apiUrl = `/api/anime?page=${pageNumber}`;
+      const apiUrl = `/api/anime?page=${page}&shuffle=${shuffle}`;
       const response = await client.get(apiUrl);
       const fetchedAnimes = response.data["animes"];
       setAnimes(fetchedAnimes); // Update animes state using functional update to avoid dependency on previous state
@@ -44,7 +44,7 @@ const AnimePage = ({ client, animes, setAnimes }: AnimePageProps) => {
   //   });
   // }, [isLoading]);
   useEffect(() => {
-    fetchAnimeData();
+    fetchAnimeData(1, 1);
   }, []);
 
   return (

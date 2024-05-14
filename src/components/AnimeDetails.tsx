@@ -7,10 +7,12 @@ import PuffLoader from "react-spinners/PuffLoader";
 interface AnimeDetailsProps {
     client: AxiosInstance;
     setAleartInfo: React.Dispatch<React.SetStateAction<AleartProps>>;
+    authenticated: boolean;
+    setModelOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 
-const AnimeDetails = ({ client, setAleartInfo }: AnimeDetailsProps) => {
+const AnimeDetails = ({ client, setAleartInfo, authenticated, setModelOpen }: AnimeDetailsProps) => {
 
 
     const [animeId, setAnimeId] = useState(window.location.href.split("/")[6]);
@@ -19,12 +21,16 @@ const AnimeDetails = ({ client, setAleartInfo }: AnimeDetailsProps) => {
     const [similarAnimes, setSimilarAnimes] = useState<Anime[]>([]);
     const [isLoadingSimilarAnimes, setIsLoadingSimilarAnimes] = useState(true);
     const [isLoadingAnimeDetails, setIsLoadingAnimeDetails] = useState(true);
+    const [isFavorite, setIsFavorite] = useState(false);
+    const [isWatchlist, setIsWatchlist] = useState(false);
     const fetchAnimeData = async () => {
         try {
             const apiUrl = `/api/anime/${animeId}`;
             const response = await client.get(apiUrl);
             setIsLoadingAnimeDetails(false);
             setAnime(response.data["anime"]); // Update animes state using functional update to avoid dependency on previous state
+            setIsFavorite(response.data["is_favorite"]);
+            setIsWatchlist(response.data["is_watchlist"]);
         } catch (error) {
             console.error("Error fetching data:", error);
         } finally {
@@ -44,17 +50,26 @@ const AnimeDetails = ({ client, setAleartInfo }: AnimeDetailsProps) => {
     }
 
     const handleSubmit = async (collectionType: String) => {
+        if (!authenticated) {
+            setModelOpen(true);
+            return;
+        }
     const formData = {
       "animeId": animeId,
       "typeOfCollection": collectionType,
     }
-    client.post("/api/anime/add-collection/", formData, {withCredentials: true}).then(function () {
+    client.post("/api/anime/add-collection/", formData, {withCredentials: true}).then(function (response) {
       setAleartInfo({
          isAleart: 1,
           title: "Success",
-          normalText: `Adding ${anime.title} to ${collectionType} !`,
+          normalText: `${response.data['action']} ${anime.title} - ${collectionType} !`,
 
-      })
+      });
+        if (collectionType == "favorite") {
+            setIsFavorite(!isFavorite);
+        } else {
+            setIsWatchlist(!isWatchlist);
+        }
     });
 
   }
@@ -64,7 +79,7 @@ const AnimeDetails = ({ client, setAleartInfo }: AnimeDetailsProps) => {
         setIsLoadingAnimeDetails(true);
         fetchAnimeData();
         fetchSimilarAnimes();
-    }, [animeId]);
+    }, [animeId, authenticated]);
 
     useEffect(() => {
         if (anime) {
@@ -100,9 +115,9 @@ const AnimeDetails = ({ client, setAleartInfo }: AnimeDetailsProps) => {
                                         <a href={anime.img_url ? anime.img_url : ""}>
                                             <img data-src={anime.img_url ? anime.img_url : ""} alt={anime.title} itemProp="image" src={anime.img_url ? anime.img_url : ""} /> </a>
                                     </div>
-                                    <div className="action-link"> <a onClick={()=>{handleSubmit("watchlist")}}>Add to My List</a></div>
+                                    <div className="action-link"> <a onClick={()=>{handleSubmit("watchlist")}}>{isWatchlist ? "Remove from List" : "Add to My List"}</a></div>
 
-                                    <div className="action-link"><a onClick={()=>{handleSubmit("favorite")}}>Add to Favorites</a></div>
+                                    <div className="action-link"><a onClick={()=>{handleSubmit("favorite")}}>{isFavorite ? "Remove Favorite" : "Add to Favorites"}</a></div>
 
 
                                     <h2 className="section-header">Information</h2>
@@ -179,7 +194,7 @@ const AnimeDetails = ({ client, setAleartInfo }: AnimeDetailsProps) => {
                                                                     <div className="anime-details-cell-rank"><span title="based on the top anime page. Please note that 'Not yet aired' and 'R18+' titles are excluded.">Ranked <strong>#{anime.ranked}</strong></span><span>Popularity <strong>#{anime.popularity}</strong></span></div>
                                                                 </div>
                                                                 <br></br>
-                                                                <div className="user-status-block"><input type="hidden" value="9253" /><input type="hidden" value="" /><a href="https://myanimelist.net/ownlist/anime/add?selected_series_id=9253&amp;hideLayout=1&amp;click_type=list-add-anime-title-btn-att-to-my-list&amp;more_type=1&amp;only_white=1" className="add-to-my-list-anchor" data-ga-click-type="list-add-anime-title-btn-att-to-my-list" data-ga-impression-type="list-add-anime-title-btn-att-to-my-list" >Add to My List</a>
+                                                                <div className="user-status-block"><input type="hidden" value="9253" /><input type="hidden" value="" /><a onClick={()=>{handleSubmit("watchlist")}} className="add-to-my-list-anchor" data-ga-click-type="list-add-anime-title-btn-att-to-my-list" data-ga-impression-type="list-add-anime-title-btn-att-to-my-list" >{isWatchlist ? "Remove from List" : "Add to My List"}</a>
 
                                                                 </div>
                                                             </div>

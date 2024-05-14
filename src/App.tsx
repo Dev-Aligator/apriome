@@ -173,7 +173,7 @@ const App = () => {
           </div>
           <div className={`bg-primary-custom ${styles.flexStart}`}>
             <div className={`${styles.moviePageWidth}`}>
-              <AnimeDetails client={client} setAleartInfo={setAleartInfo}></AnimeDetails>
+              <AnimeDetails client={client} setAleartInfo={setAleartInfo} authenticated={authenticated} setModelOpen={setModalOpen}></AnimeDetails>
               <Footer />
 
             </div>
