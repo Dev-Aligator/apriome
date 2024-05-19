@@ -1,10 +1,4 @@
-import {
-  Footer,
-  Hero,
-  Navbar,
-  Modal,
-  UserProfile,
-} from "./components";
+import { Footer, Hero, Navbar, Modal, UserPage } from "./components";
 import styles from "./style";
 import { useEffect, useState } from "react";
 import { Routes, Route } from "react-router-dom";
@@ -32,8 +26,7 @@ const App = () => {
   const [authenticated, setAuthenticated] = useState(false);
 
   const [animes, setAnimes] = useState<Anime[]>([]);
-
-
+  const [usePagination, setUsePagination] = useState(true);
 
   const [userInfo, setUserInfo] = useState<[String, UserFeature | null]>([
     "undefine",
@@ -72,7 +65,6 @@ const App = () => {
       });
   };
 
-
   return (
     <Routes>
       <Route
@@ -110,14 +102,24 @@ const App = () => {
             </div>
             <div className={`bg-primary-custom ${styles.flexStart}`}>
               <div className={`${styles.boxWidth}`}>
-                <Hero setOpenModal={setModalOpen} setAnimes={setAnimes} client={client} />
+                <Hero
+                  setOpenModal={setModalOpen}
+                  setAnimes={setAnimes}
+                  client={client}
+                  setUsePagination={setUsePagination}
+                />
               </div>
             </div>
             <div
               className={`bg-primary-custom ${styles.paddingX} ${styles.flexStart}`}
             >
               <div className={`movie-page-container ${styles.moviePageWidth} `}>
-                <AnimePage client={client} animes={animes} setAnimes={setAnimes}></AnimePage>
+                <AnimePage
+                  client={client}
+                  animes={animes}
+                  setAnimes={setAnimes}
+                  usePagination={usePagination}
+                ></AnimePage>
                 <Footer />
               </div>
             </div>
@@ -135,51 +137,57 @@ const App = () => {
               client={client}
               userInfo={userInfo}
             />
-            <UserProfile userInfo={userInfo} client={client}></UserProfile>
+            {/* <UserProfile userInfo={userInfo} client={client}></UserProfile> */}
+            <UserPage client={client}></UserPage>
           </div>
         }
       />
       <Route
         path="/anime/:id"
-        element={<div className="bg-primary-custom w-full overflow-hidden main-modal h-full">
-          <Aleart
-            isAleart={aleartInfo.isAleart}
-            title={aleartInfo.title}
-            normalText={aleartInfo.normalText}
-            strongText={aleartInfo.strongText}
-            setAleartInfo={setAleartInfo}
-            severity={aleartInfo.severity}
-            color={aleartInfo.color}
-          ></Aleart>
-          {modalOpen && !authenticated && (
-            <Modal
-              setOpenModal={setModalOpen}
-              setAuthenticated={setAuthenticated}
-              authenticated={authenticated}
-              client={client}
-              getUserFunction={getUser}
-            />
-          )}
-          <div className={`${styles.paddingX} ${styles.flexCenter}`}>
-            <div className={`${styles.boxWidth}`}>
-              <Navbar
-                setAuthenticated={setAuthenticated}
+        element={
+          <div className="bg-primary-custom w-full overflow-hidden main-modal h-full">
+            <Aleart
+              isAleart={aleartInfo.isAleart}
+              title={aleartInfo.title}
+              normalText={aleartInfo.normalText}
+              strongText={aleartInfo.strongText}
+              setAleartInfo={setAleartInfo}
+              severity={aleartInfo.severity}
+              color={aleartInfo.color}
+            ></Aleart>
+            {modalOpen && !authenticated && (
+              <Modal
                 setOpenModal={setModalOpen}
+                setAuthenticated={setAuthenticated}
                 authenticated={authenticated}
                 client={client}
-                userInfo={userInfo}
+                getUserFunction={getUser}
               />
+            )}
+            <div className={`${styles.paddingX} ${styles.flexCenter}`}>
+              <div className={`${styles.boxWidth}`}>
+                <Navbar
+                  setAuthenticated={setAuthenticated}
+                  setOpenModal={setModalOpen}
+                  authenticated={authenticated}
+                  client={client}
+                  userInfo={userInfo}
+                />
+              </div>
+            </div>
+            <div className={`bg-primary-custom ${styles.flexStart}`}>
+              <div className={`${styles.moviePageWidth}`}>
+                <AnimeDetails
+                  client={client}
+                  setAleartInfo={setAleartInfo}
+                  authenticated={authenticated}
+                  setModelOpen={setModalOpen}
+                ></AnimeDetails>
+                <Footer />
+              </div>
             </div>
           </div>
-          <div className={`bg-primary-custom ${styles.flexStart}`}>
-            <div className={`${styles.moviePageWidth}`}>
-              <AnimeDetails client={client} setAleartInfo={setAleartInfo} authenticated={authenticated} setModelOpen={setModalOpen}></AnimeDetails>
-              <Footer />
-
-            </div>
-          </div>
-
-        </div>}
+        }
       />
     </Routes>
   );

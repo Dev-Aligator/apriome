@@ -1,4 +1,4 @@
-import MovieCard from "./AnimeCard";
+import AnimeCard from "./AnimeCard";
 import "../styles/AnimePage.sass";
 import { AxiosInstance } from "axios";
 import { useEffect, useState } from "react";
@@ -9,9 +9,15 @@ interface AnimePageProps {
   client: AxiosInstance;
   animes: Anime[];
   setAnimes: React.Dispatch<React.SetStateAction<Anime[]>>;
+  usePagination: boolean;
 }
 
-const AnimePage = ({ client, animes, setAnimes }: AnimePageProps) => {
+const AnimePage = ({
+  client,
+  animes,
+  setAnimes,
+  usePagination,
+}: AnimePageProps) => {
   const [isLoading, setIsLoading] = useState(false);
   const [pageNumber, setPageNumber] = useState(1);
 
@@ -21,7 +27,7 @@ const AnimePage = ({ client, animes, setAnimes }: AnimePageProps) => {
     fetchAnimeData(value);
   };
 
-  const fetchAnimeData = async (page: number = 1, shuffle: number =0) => {
+  const fetchAnimeData = async (page: number = 1, shuffle: number = 0) => {
     setIsLoading(true);
     // localStorage.topper = window.scrollY;
 
@@ -45,7 +51,7 @@ const AnimePage = ({ client, animes, setAnimes }: AnimePageProps) => {
   // }, [isLoading]);
   useEffect(() => {
     fetchAnimeData(1, 1);
-  }, []);
+  }, [usePagination]);
 
   return (
     <>
@@ -56,18 +62,20 @@ const AnimePage = ({ client, animes, setAnimes }: AnimePageProps) => {
       ) : (
         <div className="movie-page">
           {animes?.map((anime, index) => (
-            <MovieCard key={index} anime={anime} />
+            <AnimeCard key={index} anime={anime} />
           ))}
         </div>
       )}
       <div className="centered-div pagination">
-        <Pagination
-          count={676}
-          page={pageNumber}
-          onChange={handlePaginationChange}
-          size="large"
-          style={{ color: "#F07489" }}
-        ></Pagination>
+        {usePagination && (
+          <Pagination
+            count={676}
+            page={pageNumber}
+            onChange={handlePaginationChange}
+            size="large"
+            style={{ color: "#F07489" }}
+          ></Pagination>
+        )}
       </div>
     </>
   );

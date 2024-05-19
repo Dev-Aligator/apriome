@@ -45,7 +45,7 @@ const ProfileSettingsDropdown = ({
           <ul>
             <li>
               <i className="fa-regular fa-user"></i>
-              <a href="/Apriome/#/profile">Profile</a>
+              <a href="/apriome/#/profile">Profile</a>
             </li>
             {/* <li>
               <i className="fa-solid fa-pen-to-square"></i>

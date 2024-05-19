@@ -21,8 +21,6 @@ export interface UserFeature {
   user:  number;
   firstName: string | null;
   lastName: string | null;
-  lastLatitude: number | null;
-  lastLongitude: number | null;
   photoUrl: string | null;
 }
 

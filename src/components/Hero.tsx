@@ -11,9 +11,15 @@ interface HeroProps {
   setOpenModal: React.Dispatch<React.SetStateAction<boolean>>;
   client: AxiosInstance;
   setAnimes: React.Dispatch<React.SetStateAction<Anime[]>>;
+  setUsePagination: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const Hero = ({ setOpenModal, client, setAnimes }: HeroProps) => {
+const Hero = ({
+  setOpenModal,
+  client,
+  setAnimes,
+  setUsePagination,
+}: HeroProps) => {
   const animationVariants = {
     hidden: {
       opacity: 0,
@@ -39,7 +45,11 @@ const Hero = ({ setOpenModal, client, setAnimes }: HeroProps) => {
         className={`flex-1 ${styles.flexStart} flex-col xl:px-0 sm:px-16 px-6`}
       >
         <div className="flex flex-row items-center py-[6px] px-4 bg-discount-gradient rounded-[10px] mb-2">
-          <img src={discount} alt="discount" className="w-[32px] h-[32px] mr-2" />
+          <img
+            src={discount}
+            alt="discount"
+            className="w-[32px] h-[32px] mr-2"
+          />
           <p className={`${styles.paragraph} ml-2`}>
             <span className="text-white">AI</span>-Powered{" "}
             <span className="text-white">Anime</span> Recommendation System
@@ -79,10 +89,16 @@ const Hero = ({ setOpenModal, client, setAnimes }: HeroProps) => {
           </motion.h1>
         </AnimatePresence>
         <p className={`${styles.paragraph} max-w-[470px] mt-5`}>
-          Tell us what kind of anime gets you excited! Share your favorites and we'll create a personalized list just for you!
+          Tell us what kind of anime gets you excited! Share your favorites and
+          we'll create a personalized list just for you!
         </p>
-        <SearchBar animationVariants={animationVariants} client={client} setAnimes={setAnimes}></SearchBar>
-             </div>
+        <SearchBar
+          animationVariants={animationVariants}
+          client={client}
+          setAnimes={setAnimes}
+          setUsePagination={setUsePagination}
+        ></SearchBar>
+      </div>
       <motion.div
         className={`flex-1 flex ${styles.flexCenter} md:my-0 my-10 relative`}
         initial={{ x: "7rem", opacity: 0 }}
