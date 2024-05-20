@@ -22,10 +22,8 @@ export const UserAnimeAnalyticsContainer = ({
 
   const fetchUserCollection = async () => {
     try {
-      const response = await client.get(
-        `/api/user/collection?typeOfCollection=watchlist`
-      );
-      const fetchedCollection = response.data["collection"];
+      const response = await client.get(`/api/user/recommendations/`);
+      const fetchedCollection = response.data["recommendations"];
       setAnalyticsAnimes(fetchedCollection);
     } catch (error) {
       console.error("Error fetching data:", error);

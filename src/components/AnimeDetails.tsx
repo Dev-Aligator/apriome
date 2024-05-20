@@ -4,6 +4,7 @@ import { AleartProps, Anime } from "./Interface/InterfaceCollection";
 import { AxiosInstance } from "axios";
 import { defaultAnime } from "../constants";
 import PuffLoader from "react-spinners/PuffLoader";
+import { HiStar } from "react-icons/hi";
 interface AnimeDetailsProps {
   client: AxiosInstance;
   setAleartInfo: React.Dispatch<React.SetStateAction<AleartProps>>;
@@ -25,6 +26,7 @@ const AnimeDetails = ({
   const [isLoadingAnimeDetails, setIsLoadingAnimeDetails] = useState(true);
   const [isFavorite, setIsFavorite] = useState(false);
   const [isWatchlist, setIsWatchlist] = useState(false);
+  const [userScore, setUserScore] = useState(10);
   const fetchAnimeData = async () => {
     try {
       const apiUrl = `/api/anime/${animeId}`;
@@ -59,6 +61,7 @@ const AnimeDetails = ({
     const formData = {
       animeId: animeId,
       typeOfCollection: collectionType,
+      rating: userScore,
     };
     client
       .post("/api/anime/add-collection/", formData, { withCredentials: true })
@@ -274,21 +277,86 @@ const AnimeDetails = ({
                                       </div>
                                     </div>
                                     <br></br>
-                                    <div className="user-status-block">
-                                      <input type="hidden" value="9253" />
-                                      <input type="hidden" value="" />
-                                      <a
-                                        onClick={() => {
-                                          handleSubmit("watchlist");
+                                    <div
+                                      className="flex flex-row"
+                                      style={{ alignItems: "center" }}
+                                    >
+                                      <div className="user-status-block">
+                                        <input type="hidden" value="9253" />
+                                        <input type="hidden" value="" />
+                                        <a
+                                          onClick={() => {
+                                            handleSubmit("watchlist");
+                                          }}
+                                          className="add-to-my-list-anchor"
+                                          data-ga-click-type="list-add-anime-title-btn-att-to-my-list"
+                                          data-ga-impression-type="list-add-anime-title-btn-att-to-my-list"
+                                        >
+                                          {isWatchlist
+                                            ? "Remove from List"
+                                            : "Add to My List"}
+                                        </a>
+                                      </div>
+                                      <select
+                                        name="myinfo_score"
+                                        style={{
+                                          borderColor: "rgb(216, 216, 216)",
+                                          borderStyle: "solid",
+                                          borderWidth: "1px",
+                                          fontSize: "11px",
+                                          padding: "6px 6px 6px 10px",
+                                          minWidth: "150px",
                                         }}
-                                        className="add-to-my-list-anchor"
-                                        data-ga-click-type="list-add-anime-title-btn-att-to-my-list"
-                                        data-ga-impression-type="list-add-anime-title-btn-att-to-my-list"
+                                        value={userScore}
+                                        onChange={(e) => {
+                                          setUserScore(Number(e.target.value));
+                                        }}
                                       >
-                                        {isWatchlist
-                                          ? "Remove from List"
-                                          : "Add to My List"}
-                                      </a>
+                                        <option value="0" style={ScoringStyle}>
+                                          Select
+                                        </option>
+                                        <option value="10" style={ScoringStyle}>
+                                          (10) Masterpiece
+                                        </option>
+                                        <option value="9" style={ScoringStyle}>
+                                          (9) Great
+                                        </option>
+                                        <option value="8" style={ScoringStyle}>
+                                          (8) Very Good
+                                        </option>
+                                        <option value="7" style={ScoringStyle}>
+                                          (7) Good
+                                        </option>
+                                        <option value="6" style={ScoringStyle}>
+                                          (6) Fine
+                                        </option>
+                                        <option value="5" style={ScoringStyle}>
+                                          (5) Average
+                                        </option>
+                                        <option value="4" style={ScoringStyle}>
+                                          (4) Bad
+                                        </option>
+                                        <option value="3" style={ScoringStyle}>
+                                          (3) Very Bad
+                                        </option>
+                                        <option value="2" style={ScoringStyle}>
+                                          (2) Horrible
+                                        </option>
+                                        <option value="1" style={ScoringStyle}>
+                                          (1) Appalling
+                                        </option>
+                                      </select>
+                                      <div
+                                        style={{
+                                          position: "relative",
+                                          left: "-50px",
+                                        }}
+                                      >
+                                        <HiStar
+                                          color="#ffcd3c"
+                                          size="20"
+                                        ></HiStar>
+                                      </div>
                                     </div>
                                   </div>
                                   <div className="anime-details-right-poster-container">
@@ -394,5 +462,8 @@ const AnimeDetails = ({
     </>
   );
 };
-
+const ScoringStyle: React.CSSProperties = {
+  margin: "0px",
+  padding: "0px",
+};
 export default AnimeDetails;
