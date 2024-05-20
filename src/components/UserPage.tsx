@@ -1,11 +1,12 @@
 import { AxiosInstance } from "axios";
 import { Anime } from "./Interface/InterfaceCollection";
 import { UserCollectionDetails } from "./UserPage/UserCollectionDetails";
-import { UserCollectionInfo } from "./UserPage/UserCollectionInfo";
 import { UserCollectionSelection } from "./UserPage/UserCollectionSelection";
 import { UserHeader } from "./UserPage/UserHeader";
 import { useState, useEffect } from "react";
 import PuffLoader from "react-spinners/PuffLoader";
+import { UserAnimeAnalyticsButton } from "./UserPage/UserAnimeAnalyticsButton";
+import { UserAnimeAnalyticsContainer } from "./UserPage/UserAnimeAnalyticsContainer";
 
 interface UserPageProps {
   client: AxiosInstance;
@@ -24,7 +25,7 @@ const UserPage = ({ client }: UserPageProps) => {
     useState<String>("watchlist");
   const [isLoadingUserProfile, setIsLoadingUserProfile] = useState(true);
   const [isLoadingUserCollection, setIsLoadingUserCollection] = useState(true);
-
+  const [isLoadingUserAnalytics, setIsLoadingUserAnalytics] = useState(true);
   const fetchUserCollection = async () => {
     try {
       const response = await client.get(
@@ -73,43 +74,65 @@ const UserPage = ({ client }: UserPageProps) => {
   }, [selectedCollection]);
 
   return (
-    <>
-      {isLoadingUserProfile ? (
-        <div className="centered-div" style={{ height: "40vh" }}>
-          <PuffLoader
-            color={"#F07489"}
-            loading={isLoadingUserProfile}
-            size={200}
-          />
-        </div>
-      ) : (
-        <>
-          <div
-            className="flex flex-row"
-            style={{
-              background:
-                "rgba(255, 255, 255, 0.05) none repeat scroll 0% 0% / auto padding-box border-box",
-            }}
-          >
-            <UserHeader userData={userData}></UserHeader>
-            {false && (
-              <UserCollectionInfo
-                setSelectedCollection={setSelectedCollection}
-              ></UserCollectionInfo>
-            )}
+    <div style={UserPageStyle.UserPage}>
+      <div style={UserPageStyle.UserPageContainer}>
+        {isLoadingUserProfile ? (
+          <div className="centered-div" style={{ height: "40vh" }}>
+            <PuffLoader
+              color={"#F07489"}
+              loading={isLoadingUserProfile}
+              size={200}
+            />
           </div>
-          <UserCollectionSelection
-            selectedCollection={selectedCollection}
-            setSelectedCollection={setSelectedCollection}
-          ></UserCollectionSelection>
-          <UserCollectionDetails
-            collectionAnimes={userCollectionAnime}
-            isLoadingUserCollection={isLoadingUserCollection}
-          ></UserCollectionDetails>
-        </>
-      )}
-    </>
+        ) : (
+          <>
+            <div
+              className="flex flex-row"
+              style={{
+                background:
+                  "rgba(255, 255, 255, 0.05) none repeat scroll 0% 0% / auto padding-box border-box",
+                alignItems: "center",
+              }}
+            >
+              <UserHeader userData={userData}></UserHeader>
+              <UserAnimeAnalyticsButton
+                setIsLoadingUserAnalytics={setIsLoadingUserAnalytics}
+              ></UserAnimeAnalyticsButton>
+            </div>
+            <UserAnimeAnalyticsContainer
+              client={client}
+              isLoadingUserAnalytics={isLoadingUserAnalytics}
+              setIsLoadingUserAnalytics={setIsLoadingUserAnalytics}
+            ></UserAnimeAnalyticsContainer>
+            <UserCollectionSelection
+              selectedCollection={selectedCollection}
+              setSelectedCollection={setSelectedCollection}
+            ></UserCollectionSelection>
+            <UserCollectionDetails
+              collectionAnimes={userCollectionAnime}
+              isLoadingUserCollection={isLoadingUserCollection}
+            ></UserCollectionDetails>
+          </>
+        )}
+      </div>
+    </div>
   );
 };
 
 export default UserPage;
+
+const UserPageStyle = {
+  UserPage: {
+    display: "flex",
+    justifyContent: "center",
+  },
+
+  UserPageContainer: {
+    maxWidth: "80%",
+    minHeight: "80vh",
+    maxHeight: "88vh",
+    padding: "30px 30px",
+    background: "#232234",
+    borderRadius: "15px",
+  },
+};

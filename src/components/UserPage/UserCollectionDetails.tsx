@@ -14,8 +14,8 @@ export const UserCollectionDetails = ({
   isLoadingUserCollection,
 }: UserCollectionDetailsProps) => {
   const imgageStyle = {
-    width: "100px",
-    height: "120px",
+    maxWidth: "100px",
+    maxHeight: "120px",
   };
 
   const animeEntryStyle = {
@@ -57,7 +57,7 @@ export const UserCollectionDetails = ({
           />
         </div>
       ) : (
-        <div>
+        <div style={{ maxHeight: "60%", overflowY: "scroll" }}>
           {collectionAnimes.map((anime, index) => (
             <div
               key={index}
@@ -73,7 +73,13 @@ export const UserCollectionDetails = ({
               />
               <div style={animeInfoStyle}>
                 <div className="flex flex-row">
-                  <span style={{ ...titleStyle, backgroundColor: "#030305" }}>
+                  <span
+                    style={{
+                      ...titleStyle,
+                      backgroundColor: "#030305",
+                      marginRight: "auto",
+                    }}
+                  >
                     {anime.title}
                   </span>
 
@@ -81,10 +87,10 @@ export const UserCollectionDetails = ({
                     style={{
                       backgroundColor: "#F07489",
                       color: "#000",
-                      position: "absolute",
-                      right: "50px",
                       marginTop: "10px",
                       ...titleStyle,
+                      position: "relative",
+                      right: "50px",
                     }}
                   >
                     {anime.score}
