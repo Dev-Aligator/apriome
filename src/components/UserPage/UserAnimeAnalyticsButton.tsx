@@ -5,6 +5,14 @@ interface UserAnimeAnalyticsButtonProps {
 export const UserAnimeAnalyticsButton = ({
   setIsLoadingUserAnalytics,
 }: UserAnimeAnalyticsButtonProps) => {
+  const textStrongStyle: React.CSSProperties = {
+    display: "block",
+    fontWeight: 400,
+    fontSize: "19.0398px",
+    boxSizing: "border-box",
+    margin: "0px",
+    padding: "0px",
+  };
   return (
     <a
       onClick={() => {
@@ -40,29 +48,22 @@ export const UserAnimeAnalyticsButton = ({
         <span
           style={{ boxSizing: "border-box", margin: "0px", padding: "0px" }}
         >
-          <strong
-            style={{
-              display: "block",
-              fontWeight: 400,
-              fontSize: "19.0398px",
-              boxSizing: "border-box",
-              margin: "0px",
-              padding: "0px",
-            }}
-          >
-            Anime Recommendations
-          </strong>
-          <em
-            style={{
-              display: "block",
-              fontStyle: "normal",
-              boxSizing: "border-box",
-              margin: "0px",
-              padding: "0px",
-            }}
-          >
-            Analytics from your preferences
-          </em>
+          {window.innerWidth > 1000 ? ( <>
+            <strong style={textStrongStyle}>
+              Anime Recommendations
+            </strong>
+            <em
+              style={{
+                display: "block",
+                fontStyle: "normal",
+                boxSizing: "border-box",
+                margin: "0px",
+                padding: "0px",
+              }}
+            >
+              Analytics from your preferences
+            </em>
+          </>) : ( <strong style={textStrongStyle}>Analytics</strong>)}
         </span>
       </div>
     </a>

@@ -13,9 +13,11 @@ export const UserAnimeAnalyticsContainer = ({
   isLoadingUserAnalytics,
   setIsLoadingUserAnalytics,
 }: UserAnimeAnalyticsContainerProps) => {
-  const userAnimeAnimesStyle = {
+  const userAnimeAnimesStyle:React.CSSProperties = {
     backgroundColor: "#19171c",
-    minHeight: "20vh",
+    minHeight: "210px",
+    overflowX: "auto",
+    overflowY: "hidden",
   };
 
   const [analyticsAnimes, setAnalyticsAnimes] = useState<Anime[]>([]);
@@ -44,7 +46,7 @@ export const UserAnimeAnalyticsContainer = ({
         className="recommendation-div"
         data-json='{"width":702,"btnWidth":40,"margin":8}'
       >
-        <div className="recommendations" style={{ marginTop: "10px" }}>
+        <div className="recommendations" style={{ marginTop: "10px", height: "fit-content" }}>
           {isLoadingUserAnalytics ? (
             <div className="centered-div">
               <PuffLoader
@@ -61,7 +63,8 @@ export const UserAnimeAnalyticsContainer = ({
                 gap: "50px",
                 alignItems: "center",
                 position: "relative",
-                right: "17px",
+                width: "fit-content",
+                height: "fit-content",
               }}
             >
               {analyticsAnimes.map((anime, index) => (
@@ -75,7 +78,7 @@ export const UserAnimeAnalyticsContainer = ({
                     onClick={() => {}}
                     className="anime-recommended"
                     data-ga-click-type="anime-user-recommend"
-                    style={{ width: "fit-content", height: "fit-content" }}
+                    style={{ height: "fit-content", width: "fit-content"}}
                   >
                     <span>{anime.title}</span>
                     <span>{anime.score?.toFixed(2)}</span>
@@ -83,8 +86,6 @@ export const UserAnimeAnalyticsContainer = ({
                       src={anime.img_url ? anime.img_url : ""}
                       alt={anime.title}
                       style={{
-                        height: "210px",
-                        width: "140px",
                         maxWidth: "130px",
                       }}
                     />
